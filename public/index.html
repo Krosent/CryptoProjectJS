@@ -1,0 +1,63 @@
+<html>
+
+<head>
+  <!-- <title>Main Page</title> -->
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+  <!-- RX JS library import -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.3.2/rxjs.umd.js"></script>
+
+  <!-- Table business logic import -->
+  <script src="javascripts/bin1minuteTable.js"></script>
+  <!-- General logic import -->
+  <script src="javascripts/main.js"></script>
+
+</head>
+
+<body>
+  <div id="mainBlock" class="container">
+    <h1>Welcome to Application. Cloud Computing Course Project</h1>
+    <i>Author: Artyom Kuznetsov</i>
+    <div>
+      <p>Click corresponding button to get result:
+      <button type="button" class="btn btn-primary" onclick="displayBidsOnClicked()">Display Bids for various currencies</button>
+      <button type="button" class="btn btn-success">Display Something</button>
+    </div>
+  </div>
+
+  <div id="currencyBidBlock" style="display: none;" class="container">
+    <button type="button" class="btn btn-primary" onclick="returnHome()">Back</button>
+    <h1>Currency Bid Update</h1>
+    <i>Data updates every 1 minite</i>
+    <select class="form-select" aria-label="Select Currency" name="currencySelector" id="currencySelector">
+      <option selected>All Currencies</option>
+      <option value=".BCHBON">.BCHBON</option>
+      <option value=".BADAT">.BADAT</option>
+      <option value=".XRPBON">.XRPBON</option>
+    </select>
+    <table id="currencyTableNum1" class="table">
+      <thead>
+        <tr>
+          <th>Currency</th>
+          <th>High</th>
+          <th>Low</th>
+          <th>Open</th>
+          <th>Close</th>
+        </tr>
+      </thead>
+      <tbody id="currencyTableNum1Body">
+        <!-- Here we add actual rows (dynamically) -->
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
