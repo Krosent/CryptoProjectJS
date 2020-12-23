@@ -16,20 +16,21 @@ const {
 } = rxjs.operators;
 
 const { webSocket } = rxjs.webSocket;
+
 // Bitmex WS Endpoint
 var subject = null;
 
+// let's have the second subject which can be a product of filtering? 
+var filteredSubject = null; 
+
 function subscribeOnUpdates() {
     subject = webSocket("wss://www.bitmex.com/realtime?subscribe=tradeBin1m");
+
+    // The idea is to manupulate this subject, not the original one.
+    filteredSubject = subject;
+
     // Here we subscribe on updates from above mentioned WS. 
-    subject.subscribe(
-        msg => {
-            console.log('message received: ' + JSON.stringify(msg.data));
-            refreshTable(getTable('currencyTableNum1'), msg.data);
-        }, // Called whenever there is a message from the server.
-        err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
-        () => console.log('complete') // Called when connection is closed (for whatever reason).
-    );
+    subscribe(filteredSubject);
 }
 
 function unsubscribeOnUpdates() {
@@ -58,23 +59,10 @@ function refreshTable(table, data) {
             const close = elem.close;
             const high = elem.high;
             const low = elem.low;
-            const timestamp = elem.timestamp;
             const currency = elem.symbol;
 
             var tableRows = Array.from(getTableBody(table)[0].rows);
 
-
-            /* Check option element on the frontend. 
-            *  If 'All' option is selected then display every currency
-            *  If another option is selected then display corresponding currency. 
-            *  We need to filter out table to get results
-            */
-            const optionElement = document.getElementById('currencySelector');
-            const optionElementValue = optionElement.options[optionElement.selectedIndex].text;
-            if (optionElementValue != 'All Currencies') {
-                tableRows = tableRows.filter(row => row.cells[0].innerHTML == optionElementValue);
-                //alert("Implement this!");
-            }
             // Iterate through table rows in the table.        
             // Fetch rows which are already exist. 
             const filteredRows = tableRows.filter(row => row.cells[0].innerHTML == currency);
@@ -103,4 +91,22 @@ function refreshTable(table, data) {
             }
         });
     };
+}
+
+function initSubject() {
+    subject = webSocket("wss://www.bitmex.com/realtime?subscribe=tradeBin1m");
+    // The idea is to manupulate this subject, not the original one.
+    filteredSubject = subject;
+}
+
+function subscribe(subj) {
+    subj.subscribe(
+        msg => {
+            //alert("HEY");
+            console.log('message received: ' + JSON.stringify(msg));
+            refreshTable(getTable('currencyTableNum1'), msg.data);
+        }, // Called whenever there is a message from the server.
+        err => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+        () => console.log('complete') // Called when connection is closed (for whatever reason).
+    );
 }

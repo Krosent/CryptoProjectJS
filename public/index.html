@@ -14,29 +14,32 @@
   <!-- General logic import -->
   <script src="javascripts/main.js"></script>
 
+  <!-- Chart JS import -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+  <!-- Price Evolution Logic import -->
+  <script src="javascripts/priceEvolution.js"></script>
+
 </head>
 
 <body>
+  <!-- This is the home page block. This is what you see first -->
   <div id="mainBlock" class="container">
     <h1>Welcome to Application. Cloud Computing Course Project</h1>
     <i>Author: Artyom Kuznetsov</i>
     <div>
       <p>Click corresponding button to get result:
-      <button type="button" class="btn btn-primary" onclick="displayBidsOnClicked()">Display Bids for various currencies</button>
-      <button type="button" class="btn btn-success">Display Something</button>
+        <button type="button" class="btn btn-primary" onclick="displayBidsOnClicked()">Display Bids for various
+          currencies</button>
+        <button type="button" class="btn btn-success" onclick="priceEvolutionOnClicked()">Price Evolution</button>
     </div>
   </div>
 
+  <!-- This block is shown when first button is triggered. At the same time main block becomes invisible.  -->
   <div id="currencyBidBlock" style="display: none;" class="container">
     <button type="button" class="btn btn-primary" onclick="returnHome()">Back</button>
     <h1>Currency Bid Update</h1>
     <i>Data updates every 1 minite</i>
-    <select class="form-select" aria-label="Select Currency" name="currencySelector" id="currencySelector">
-      <option selected>All Currencies</option>
-      <option value=".BCHBON">.BCHBON</option>
-      <option value=".BADAT">.BADAT</option>
-      <option value=".XRPBON">.XRPBON</option>
-    </select>
     <table id="currencyTableNum1" class="table">
       <thead>
         <tr>
@@ -51,6 +54,37 @@
         <!-- Here we add actual rows (dynamically) -->
       </tbody>
     </table>
+  </div>
+
+  <!-- This block is shown when the second button is triggered. At the same time main block becomes invisible.
+  *** This section shows a graph which illustrates certain crypto currency change for a period of time.
+  -->
+  <div id="currencyPriceEvolutionBlock" style="display: none;">
+    <div class="row mb-3">
+      <div class="col-9">
+        <button type="button" class="btn btn-primary m-2" onclick="returnHome()">Back</button>
+      </div>
+      <div class="col-3">
+        <div class="container">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="typeDeal" id="buyOptionID" value="buyOption" checked>
+            <label class="form-check-label" for="buyOptionID">
+              Buy
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="typeDeal" id="sellOptionID" value="sellOption">
+            <label class="form-check-label" for="sellOptionID">
+              Sell
+            </label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-warning pull-right m-2" onclick="startBTCSubscription()">Show BTC</button>
+        <button type="button" class="btn btn-info pull-right m-2" onclick="startETHSubscription()">Show ETH</button>
+      </div>
+
+    </div>
+    <canvas id="currencyChart"></canvas>
   </div>
 
 
