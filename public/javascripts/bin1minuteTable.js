@@ -26,11 +26,8 @@ var filteredSubject = null;
 function subscribeOnUpdates() {
     subject = webSocket("wss://www.bitmex.com/realtime?subscribe=tradeBin1m");
 
-    // The idea is to manupulate this subject, not the original one.
-    filteredSubject = subject;
-
     // Here we subscribe on updates from above mentioned WS. 
-    subscribe(filteredSubject);
+    subscribe(subject);
 }
 
 function unsubscribeOnUpdates() {
@@ -91,12 +88,6 @@ function refreshTable(table, data) {
             }
         });
     };
-}
-
-function initSubject() {
-    subject = webSocket("wss://www.bitmex.com/realtime?subscribe=tradeBin1m");
-    // The idea is to manupulate this subject, not the original one.
-    filteredSubject = subject;
 }
 
 function subscribe(subj) {
